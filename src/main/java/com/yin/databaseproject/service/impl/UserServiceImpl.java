@@ -1,9 +1,11 @@
 package com.yin.databaseproject.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.yin.databaseproject.dao.datasql.ItemMapper;
 import com.yin.databaseproject.dao.pingyougou.UserMapper;
 import com.yin.databaseproject.service.UserService;
 import com.yin.databaseproject.vo.ItemVO;
+import com.yin.databaseproject.vo.OrderVO;
 import com.yin.databaseproject.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<ItemVO> getItems() {
-        return itemMapper.findItems();
+        List<OrderVO> orders=itemMapper.findOrdersa();
+        System.out.println(JSON.toJSONString(orders));
+       return itemMapper.findItems();
+
     }
 }

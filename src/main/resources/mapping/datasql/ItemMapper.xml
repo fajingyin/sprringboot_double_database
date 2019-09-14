@@ -4,4 +4,33 @@
    <select id="findItems" resultType="com.yin.databaseproject.vo.ItemVO">
        select * from items
    </select>
+    <resultMap id="orderMap" type="com.yin.databaseproject.vo.OrderVO">
+        <id column="orderId"  property="orderId" />
+        <result column="numId" jdbcType="VARCHAR" property="numId"/>
+        <association property="user" javaType="com.yin.databaseproject.vo.UserVO">
+            <id column="userId" jdbcType="VARCHAR" property="id"/>
+            <result  column="username" jdbcType="VARCHAR" property="username"/>
+        </association>
+        <collection property="orderDetailId" ofType="string">
+            <result column="orderDetail" jdbcType="VARCHAR" property="orderDetailId" />
+        </collection>
+        <collection property="orderDetail" ofType="com.yin.databaseproject.vo.OrderDetail">
+            <id column="orderDetail" jdbcType="VARCHAR" property="id" />
+            <result column="itemId" jdbcType="VARCHAR" property="itemId" />
+        </collection>
+    </resultMap>
+    <select id="findOrdersa" resultMap="orderMap">
+        SELECT
+            o.id as orderId,
+            user_id as userId,
+            u.username as username,
+            number as numId,
+            od.id AS orderDetail ,
+            od.items_id as itemId
+        FROM
+            orders o
+            LEFT JOIN orderdetail od ON o.id = od.orders_id
+            left join user u on o.user_id=u.id
+
+    </select>
 </mapper>
